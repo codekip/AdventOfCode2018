@@ -1,6 +1,7 @@
-import os
-from collections import defaultdict, OrderedDict
+import difflib
 import itertools
+import os
+from collections import OrderedDict, defaultdict
 
 
 def count_repetitions(str):
@@ -36,26 +37,15 @@ def result(lst, test_number=1):
 
 def common_letters(lst):
     all = lst.split("\n")
-    sortedwords = list()
-    good_words = list()
-
-    for line in all:
-        ans = result(line, test_number=2)
-        if ans["twice"] > 0 or ans["three"] > 0:
-            sortedwords.append("".join(sorted(line)))
-
-    unique = set(sortedwords)
-    for a, b in itertools.combinations(unique, 2):
-        letter_not_in_a_or_b = set(a).symmetric_difference(set(b))
-        if len(letter_not_in_a_or_b) == 1:
-            print(a, b, letter_not_in_a_or_b)
-            return set(a).intersection(set(b))
+    for a, b in itertools.combinations(all, 2):
+        if len([li for li in difflib.ndiff(a, b) if li[0] != " "]) == 2:
+            print(a, b, [li for li in difflib.ndiff(a, b) if li[0] != " "])
 
 
 def main():
     with open(os.path.join(os.path.dirname(__file__), "input.txt"), "r") as f:
         input = f.read()
-        # print(common_letters(input))
+        print(common_letters(input))
 
 
 if __name__ == "__main__":
