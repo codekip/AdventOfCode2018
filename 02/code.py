@@ -1,11 +1,10 @@
 import difflib
 import itertools
 import os
-from collections import OrderedDict, defaultdict
-
+from collections import defaultdict
 
 def count_repetitions(str):
-    ans = OrderedDict()
+    ans = dict()
     count = defaultdict(int)
     for letter in str:
         count[letter] += 1
@@ -16,8 +15,7 @@ def count_repetitions(str):
     ans["twice"] = 1 if len(twice) > 0 else 0
     ans["three"] = 1 if len(three) > 0 else 0
 
-    return dict(ans)
-
+    return ans
 
 def result(lst, test_number=1):
     twos = 0
